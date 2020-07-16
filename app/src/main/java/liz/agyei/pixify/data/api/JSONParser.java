@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import liz.agyei.pixify.Utils;
-import liz.agyei.pixify.data.Photo;
+import liz.agyei.pixify.data.models.Photo;
 
 public class JSONParser {
     public static List<Photo> parseJSONPhotos(InputStream responseBody) throws IOException, JSONException {

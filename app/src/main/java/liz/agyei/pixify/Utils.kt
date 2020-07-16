@@ -1,6 +1,6 @@
 package liz.agyei.pixify
 
-import liz.agyei.pixify.data.Photo
+import liz.agyei.pixify.data.models.Photo
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -21,7 +21,7 @@ class Utils {
             return sb.toString();
         }
 
-        fun getPhoto(id: String, title: String) : Photo{
+        fun getPhoto(id: String, title: String) : Photo {
             return Photo(id, title)
         }
     }

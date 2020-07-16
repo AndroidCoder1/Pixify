@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 import liz.agyei.pixify.BuildConfig;
 import liz.agyei.pixify.data.Config;
 import liz.agyei.pixify.data.Method;
-import liz.agyei.pixify.data.Photo;
+import liz.agyei.pixify.data.models.Photo;
 
 public class FlickrAPI {
 
