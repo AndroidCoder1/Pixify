@@ -7,6 +7,10 @@ apply plugin: 'kotlin-kapt'
 def lifecycle_version = "2.2.0"
 def arch_version = "2.1.0"
 def navigation_version = "2.3.0"
+def cardview_version = "1.0.0"
+def paging_version = "2.1.2"
+def rxjava_version = "3.0.4"
+def rxandroid_version = "3.0.0"
 
 android {
     compileSdkVersion 29
@@ -20,6 +24,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "API_KEY", "\"1508443e49213ff84d566777dc211f2a\""
     }
 
     buildTypes {
@@ -57,8 +62,21 @@ dependencies {
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    //CardView
+    implementation "androidx.cardview:cardview:$cardview_version"
+
+    //Paging
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    testImplementation "androidx.paging:paging-common:$paging_version"
+    implementation "androidx.paging:paging-rxjava2:$paging_version"
+
+    //RxJava
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
