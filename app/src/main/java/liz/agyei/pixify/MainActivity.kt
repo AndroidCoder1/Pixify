@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                                             PhotoRecyclerViewAdapter(it, this, viewModel)
                                         binding.recyclerView.layoutManager =
                                             StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
+                                        Utils.hideKeyboardFrom(this, binding.recyclerView)
                                     }
                                 })
                     }

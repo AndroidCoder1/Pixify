@@ -22,7 +22,7 @@ class PhotoRepository(var api: FlickrAPI, application: Application) {
     }
 
     fun isBookMarked(id: String) : Boolean{
-        return photoDao.isBookmarked(id)
+        return photoDao.isBookmarked(id);
     }
 
     fun insert(photo: Photo) {

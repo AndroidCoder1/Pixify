@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
+import liz.agyei.pixify.data.models.Photo
 import liz.agyei.pixify.databinding.ActivityBookmarksBinding
 import liz.agyei.pixify.preference.MyPreferenceActivity
+import liz.agyei.pixify.utils.AppExecutor
 import liz.agyei.pixify.viewmodel.BookmarksViewModel
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -27,20 +29,18 @@ class BookmarksActivity : AppCompatActivity() {
         Objects.requireNonNull(supportActionBar)?.setDisplayHomeAsUpEnabled(true)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_bookmarks)
+        binding.lifecycleOwner = this
 
         viewModel = BookmarksViewModel(application)
 
-        viewModel.bookmarkedPhotos
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                Consumer {
-                        if (it.isNotEmpty()) {
-                            binding.recyclerView.adapter = PhotoRecyclerViewAdapter(it, this@BookmarksActivity, viewModel)
-                            binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
-                        }
-                }
-            )
+        AppExecutor.getInstance().diskIO().execute {
+           var photos =  viewModel.bookmarkedPhotos
+            println("::::::::"+photos)
+            runOnUiThread{
+                binding.recyclerView.adapter = PhotoRecyclerViewAdapter(photos, this@BookmarksActivity, viewModel)
+                binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
+            }
+        }
     }
 
 

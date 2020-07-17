@@ -20,7 +20,7 @@ public class BookmarksViewModel extends AndroidViewModel {
         repository = new BookmarksRepositiory(application);
     }
 
-    public Observable<List<Photo>> getBookmarkedPhotos() { return repository.getBookmarkedPhotos(); }
+    public List<Photo> getBookmarkedPhotos() { return repository.getBookmarkedPhotos(); }
 
     public void insert(Photo photo) { repository.insert(photo); }
 

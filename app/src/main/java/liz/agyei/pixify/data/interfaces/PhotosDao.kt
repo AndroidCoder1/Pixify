@@ -2,6 +2,8 @@ package liz.agyei.pixify.data.interfaces
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import liz.agyei.pixify.data.models.Photo
 
 @Dao

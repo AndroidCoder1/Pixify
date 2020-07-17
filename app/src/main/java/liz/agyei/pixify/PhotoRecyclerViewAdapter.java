@@ -9,17 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
-import java.util.Objects;
 
-import liz.agyei.pixify.data.api.FlickrAPI;
 import liz.agyei.pixify.data.models.Photo;
 import liz.agyei.pixify.databinding.PhotoItemBinding;
 import liz.agyei.pixify.utils.AppExecutor;
@@ -52,7 +48,8 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     public void onBindViewHolder(ViewHolder holder, int position) {
         Photo photo = photos.get(position);
         holder.photoItemBinding.setPhoto(photo);
-        holder.photoItemBinding.setModel((MainActivityViewModel) model);
+        if(model instanceof MainActivityViewModel)
+            holder.photoItemBinding.setModel((MainActivityViewModel) model);
         setPhotoURL(photo.getUrl(), holder.photoItemBinding.ivPhotoUrl);
         holder.bind(photo);
         holder.photoItemBinding.setClickListener(this);
@@ -85,10 +82,12 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     @Override
     public void bookmarkClicked(MainActivityViewModel model, Photo photo) {
         AppExecutor.getInstance().diskIO().execute(() -> {
-            Boolean isBookMarked = model.isBookmarked(photo.getId());
-            if(isBookMarked){
+            boolean isBookMarked = model.isBookmarked(photo.getId());
+            if(!isBookMarked){
+                System.out.println("insert");
                 model.insert(photo);
             } else  {
+                System.out.println("delete");
                 model.delete(photo);
             }
         });
