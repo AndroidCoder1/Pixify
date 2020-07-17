@@ -18,7 +18,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     private PhotoRepository repository;
 
-    public MutableLiveData<Boolean> _isProgressShowing;
+    public MutableLiveData<Boolean> _isProgressShowing = new MutableLiveData<>();;
 
 
     public MainActivityViewModel (FlickrAPI api, Application application) {

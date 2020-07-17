@@ -30,6 +30,7 @@ abstract class PixifyDatabase : RoomDatabase() {
                         context.applicationContext,
                         PixifyDatabase::class.java,
                         "PixDB")
+                        .allowMainThreadQueries()
                         .build()
                 INSTANCE = instance
                 return instance

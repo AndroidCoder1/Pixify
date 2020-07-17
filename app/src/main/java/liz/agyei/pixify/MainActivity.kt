@@ -1,5 +1,6 @@
 package liz.agyei.pixify
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -12,11 +13,8 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_photo_detail.*
 import liz.agyei.pixify.data.api.FlickrAPI
 import liz.agyei.pixify.databinding.ActivityMainBinding
-import liz.agyei.pixify.databinding.FragmentFirstBinding
 import liz.agyei.pixify.preference.MyPreferenceActivity
 import liz.agyei.pixify.utils.Utils
 import liz.agyei.pixify.viewmodel.MainActivityViewModel
@@ -27,9 +25,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainActivityViewModel
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        viewModel = MainActivityViewModel(FlickrAPI(), application)
+
+        binding.model = viewModel
+        binding.lifecycleOwner = this
+
         RxTextView.textChanges(binding.search)
             .debounce(600, TimeUnit.MILLISECONDS)
             .subscribe { query ->
@@ -50,13 +54,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
-
-
-//            .setContentView(this, R.layout.activity_main).apply {
-            viewModel = MainActivityViewModel(FlickrAPI(), application)
-
-
 
     }
 
