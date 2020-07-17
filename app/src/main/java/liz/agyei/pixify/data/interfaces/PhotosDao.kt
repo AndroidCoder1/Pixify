@@ -14,7 +14,7 @@ interface PhotosDao {
     fun insertPhoto(photo: Photo)
 
     @Query("SELECT EXISTS(SELECT * FROM Photo WHERE id == :id)")
-    fun isBookmarked(id: String): LiveData<Boolean>
+    fun isBookmarked(id: String): Boolean
 
     @Update
     fun updatePhoto(photo: Photo)

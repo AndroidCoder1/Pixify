@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 import liz.agyei.pixify.data.api.FlickrAPI
+import liz.agyei.pixify.data.models.Photo
 import liz.agyei.pixify.databinding.ActivityMainBinding
 import liz.agyei.pixify.preference.MyPreferenceActivity
 import liz.agyei.pixify.utils.Utils
@@ -49,8 +50,10 @@ class MainActivity : AppCompatActivity() {
                                 Consumer {
                                     viewModel._isProgressShowing.postValue(false)
                                     if (it.isNotEmpty()) {
-                                        binding.recyclerView.adapter = PhotoRecyclerViewAdapter(it, this, viewModel)
-                                        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
+                                        binding.recyclerView.adapter =
+                                            PhotoRecyclerViewAdapter(it, this, viewModel)
+                                        binding.recyclerView.layoutManager =
+                                            StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
                                     }
                                 })
                     }

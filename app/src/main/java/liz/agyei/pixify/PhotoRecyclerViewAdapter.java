@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Objects;
 
 import liz.agyei.pixify.data.api.FlickrAPI;
 import liz.agyei.pixify.data.models.Photo;
 import liz.agyei.pixify.databinding.PhotoItemBinding;
+import liz.agyei.pixify.utils.AppExecutor;
 import liz.agyei.pixify.utils.ClickListener;
 import liz.agyei.pixify.viewmodel.MainActivityViewModel;
 
@@ -29,6 +32,7 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     private List<Photo> photos;
     private Context context;
     private ViewModel model;
+    PhotoItemBinding binding;
 
     public PhotoRecyclerViewAdapter(List<Photo> photos, Context context, ViewModel model) {
         this.photos = photos;
@@ -38,7 +42,7 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
 
     @Override
     public PhotoRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        PhotoItemBinding binding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.photo_item, parent, false);
         return new ViewHolder(binding);
@@ -80,7 +84,14 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
 
     @Override
     public void bookmarkClicked(MainActivityViewModel model, Photo photo) {
-        model.toggleBookMark(photo);
+        AppExecutor.getInstance().diskIO().execute(() -> {
+            Boolean isBookMarked = model.isBookmarked(photo.getId());
+            if(isBookMarked){
+                model.insert(photo);
+            } else  {
+                model.delete(photo);
+            }
+        });
         System.out.println("bookmark clicked"+ photo.getTitle());
     }
 

@@ -21,7 +21,7 @@ class PhotoRepository(var api: FlickrAPI, application: Application) {
         return api.getPhotosWithURL(tag, page, perPage)
     }
 
-    fun isBookMarked(id: String) : LiveData<Boolean>{
+    fun isBookMarked(id: String) : Boolean{
         return photoDao.isBookmarked(id)
     }
 

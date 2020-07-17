@@ -26,7 +26,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         repository = new PhotoRepository(api, application);
     }
 
-    public LiveData<Boolean> isBookmarked(String id){
+    public Boolean isBookmarked(String id){
         return repository.isBookMarked(id);
     }
 
@@ -36,13 +36,6 @@ public class MainActivityViewModel extends AndroidViewModel {
         return _isProgressShowing;
     }
 
-    public void toggleBookMark(Photo photo){
-        if (isBookmarked(photo.getId()).getValue()) {
-            delete(photo);
-        } else {
-            insert(photo);
-        }
-    }
     public void insert(Photo photo) { repository.insert(photo); }
 
     public void delete(Photo photo) { repository.delete(photo); }
