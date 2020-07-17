@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="liz.agyei.pixify.MainActivity">
     <item
+        android:id="@+id/action_bookmark"
+        android:icon="@drawable/ic_bookmark"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_manage"
         android:orderInCategory="100"

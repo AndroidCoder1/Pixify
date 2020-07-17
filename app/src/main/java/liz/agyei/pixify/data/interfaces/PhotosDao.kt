@@ -1,11 +1,7 @@
 package liz.agyei.pixify.data.interfaces
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import liz.agyei.pixify.data.models.Photo
 
 @Dao
@@ -17,8 +13,8 @@ interface PhotosDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPhoto(photo: Photo)
 
-    @Query("SELECT bookmark FROM Photo WHERE id == :id")
-    fun isBookmarked(id: String): Boolean
+    @Query("SELECT EXISTS(SELECT * FROM Photo WHERE id == :id)")
+    fun isBookmarked(id: String): LiveData<Boolean>
 
     @Update
     fun updatePhoto(photo: Photo)

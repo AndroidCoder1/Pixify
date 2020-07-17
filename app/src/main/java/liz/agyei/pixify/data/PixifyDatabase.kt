@@ -9,7 +9,8 @@ import liz.agyei.pixify.data.models.Photo
 
 @Database(
         entities = [Photo::class],
-        version = 1
+        version = 1,
+        exportSchema = false
 )
 abstract class PixifyDatabase : RoomDatabase() {
     abstract fun photosDao(): PhotosDao

@@ -6,22 +6,17 @@
 
     <data>
         <variable
-            name="photo"
-            type="liz.agyei.pixify.data.models.Photo" />
+            name="photo_id"
+            type="String" />
+
         <variable
-            name="clickListener"
-            type="liz.agyei.pixify.utils.ClickListener" />
+            name="photo_title"
+            type="String" />
+
         <variable
             name="model"
             type="liz.agyei.pixify.viewmodel.MainActivityViewModel" />
     </data>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,9 +25,8 @@
             <ImageView
                 android:id="@+id/iv_photo_url"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:contentDescription="@{photo.title}"
-                android:onClick="@{(view) -> clickListener.photoClicked(photo, view)}"
+                android:layout_height="match_parent"
+                android:contentDescription="@{photo_title}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,11 +37,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="bottom"
-                android:onClick="@{(view) -> clickListener.photoClicked(photo, view)}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
-                android:background="@mipmap/black_gradient"
-                android:text="@{photo.title}"
+                android:text="@{photo_title}"
                 android:padding="10dp"
                 android:maxLines="3"
                 android:ellipsize="end"
@@ -56,18 +48,5 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/iv_photo_url" />
 
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#0000"
-                android:onClick="@{() -> clickListener.bookmarkClicked(model, photo)}"
-                android:scaleType="fitCenter"
-                android:src="@{model.isBookmarked(photo.id) ? @drawable/ic_bookmark_filled : @drawable/ic_bookmark}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 </layout>

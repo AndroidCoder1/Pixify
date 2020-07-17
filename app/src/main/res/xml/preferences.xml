@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.preference.SeekBarPreference
+        android:title="Photos per Page"
+        android:key="seek_bar"
+        app:showSeekBarValue="true"
+        android:summary="The number of photos to be loaded per page"
+        android:defaultValue="25"
+        app:min="20"
+        app:isPreferenceVisible="true"
+        android:max="200"/>
+
+</androidx.preference.PreferenceScreen>

@@ -8,40 +8,43 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import liz.agyei.pixify.Utils;
 import liz.agyei.pixify.data.models.Photo;
+import liz.agyei.pixify.utils.Utils;
 
 public class JSONParser {
     public static List<Photo> parseJSONPhotos(InputStream responseBody) throws IOException, JSONException {
         List<Photo> photos = new ArrayList<>();
         String response = Utils.Companion.inputStreamToString(responseBody);
-        JSONObject jObj = new JSONObject(response);
-        if(jObj.has("photo")) {
-            JSONArray jsonArray = jObj.getJSONArray("photo");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String id = jsonObject.has("id") ? jsonObject.getString("id") : "";
-                String title = jsonObject.has("title") ? jsonObject.getString("title") : "";
-                Photo photo = Utils.Companion.getPhoto(id, title);
-                photos.add(photo);
+        System.out.println(response);
+        JSONObject jsonObject = new JSONObject(response);
+        if(jsonObject.has("photos")) {
+            JSONObject photosJSON = jsonObject.getJSONObject("photos");
+            if(photosJSON.has("photo")) {
+                JSONArray jsonArray = photosJSON.getJSONArray("photo");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject photoJSON = jsonArray.getJSONObject(i);
+                    String id = photoJSON.has("id") ? photoJSON.getString("id") : "";
+                    String title = photoJSON.has("title") ? photoJSON.getString("title") : "";
+                    Photo photo = Utils.Companion.getPhoto(id, title);
+                    photos.add(photo);
+                }
             }
         }
         return photos;
     }
 
-    public static Photo parseJSONPhoto(InputStream responseBody, Photo photo) throws IOException, JSONException {
+    public static String parseJSONPhoto(InputStream responseBody) throws IOException, JSONException {
         String response = Utils.Companion.inputStreamToString(responseBody);
         JSONObject jsonObject = new JSONObject(response);
         if(jsonObject.has("photo")){
             JSONObject photoJSON = jsonObject.getJSONObject("photo");
-            if(photoJSON.has("urls")){
-                JSONObject photoURLSJSON = jsonObject.getJSONObject("urls");
-                if(photoURLSJSON.has("url")) {
-                    String url = photoURLSJSON.getJSONArray("url").length() > 0 ? photoURLSJSON.getJSONArray("url").getJSONObject(0).getString("_content") : "";
-                    photo.setURL(url);
-                }
-            }
+
+            return Utils.Companion.generatePhotoURL(photoJSON.has("farm") ? photoJSON.getString("farm") : "",
+                    photoJSON.has("server") ? photoJSON.getString("server")  : "",
+                    photoJSON.has("id") ? photoJSON.getString("id") : "",
+                    photoJSON.has("secret") ? photoJSON.getString("secret") : "",
+                    photoJSON.has("originalformat") ? photoJSON.getString("originalformat") : "");
         }
-        return null;
+        return "";
     }
 }

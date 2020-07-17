@@ -5,13 +5,15 @@ apply plugin: 'kotlin-kapt'
 
 
 def lifecycle_version = "2.2.0"
-def arch_version = "2.1.0"
+def retrofit_version = "2.5.0"
 def navigation_version = "2.3.0"
 def cardview_version = "1.0.0"
 def paging_version = "2.1.2"
 def rxjava_version = "3.0.4"
 def rxandroid_version = "3.0.0"
 def room_version = "2.2.5"
+def dagger_version = "2.5"
+def glide_version = "4.9.0"
 
 android {
     compileSdkVersion 29
@@ -72,6 +74,7 @@ dependencies {
 
     //Paging
     implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     testImplementation "androidx.paging:paging-common:$paging_version"
     implementation "androidx.paging:paging-rxjava2:$paging_version"
 
@@ -79,11 +82,27 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
 
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
 
-
+    //Room DB
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    //dagger for dependency injections
+    implementation "com.google.dagger:dagger:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
+    //glide for image loading and caching
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    //PreferenceScreen
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
