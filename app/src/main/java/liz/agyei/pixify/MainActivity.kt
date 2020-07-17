@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         binding.model = viewModel
         binding.lifecycleOwner = this
 
+        //TODO "Adding CompositeDisposables to all Observables subscribed to"
+        //Using RxBinding to implement search of photos
         RxTextView.textChanges(binding.search)
             .debounce(600, TimeUnit.MILLISECONDS)
             .subscribe { query ->
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                                 Consumer {
                                     viewModel._isProgressShowing.postValue(false)
                                     if (it.isNotEmpty()) {
-                                        binding.recyclerView.adapter = PhotoRecyclerViewAdapter(it, this)
+                                        binding.recyclerView.adapter = PhotoRecyclerViewAdapter(it, this, viewModel)
                                         binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
                                     }
                                 })

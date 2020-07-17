@@ -22,7 +22,7 @@ class PhotoRepository(var api: FlickrAPI, application: Application) {
     }
 
     fun isBookMarked(id: String) : LiveData<Boolean>{
-        return Maybe.fromAction<LiveData<Boolean>> { photoDao.isBookmarked(id) }.blockingGet()
+        return photoDao.isBookmarked(id)
     }
 
     fun insert(photo: Photo) {

@@ -36,7 +36,7 @@ class BookmarksActivity : AppCompatActivity() {
             .subscribe(
                 Consumer {
                         if (it.isNotEmpty()) {
-                            binding.recyclerView.adapter = PhotoRecyclerViewAdapter(it, this@BookmarksActivity)
+                            binding.recyclerView.adapter = PhotoRecyclerViewAdapter(it, this@BookmarksActivity, viewModel)
                             binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
                         }
                 }

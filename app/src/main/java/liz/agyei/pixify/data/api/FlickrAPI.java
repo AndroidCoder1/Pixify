@@ -16,6 +16,7 @@ import liz.agyei.pixify.data.models.Photo;
 
 public class FlickrAPI {
 
+    //Getting Input Stream from Flickr API
     public Observable<InputStream> getHTTPResponse(URL url){
         return Observable.create(subscriber -> {
             try {
@@ -28,16 +29,19 @@ public class FlickrAPI {
         });
     }
 
+    //Parsing JSON from Inpustream
     public Observable<List<Photo>> getPhotosByTag(String tag, int page, int perPage) throws MalformedURLException, IOException {
         URL url = getURL(Method.PHOTOS_SEARCH, tag, page, perPage);
         return getHTTPResponse(url).map(JSONParser::parseJSONPhotos);
     }
 
+    //Get Photo based on the PhotoID
     public Observable<String> getPhotoURL(String photoId) throws MalformedURLException, IOException {
         URL url = getURL(Method.GET_PHOTO_INFO, photoId, -1, 0);
         return getHTTPResponse(url).map(JSONParser::parseJSONPhoto);
     }
 
+    //Using RxJava to add the urls to the Photo Objects
     public Observable<List<Photo>> getPhotosWithURL(String tag, int page, int perPage) throws IOException {
         return getPhotosByTag(tag, page, perPage)
                 .flatMap((Function<List<Photo>, Observable<Photo>>) photoList -> Observable.fromIterable(photoList))
@@ -47,6 +51,7 @@ public class FlickrAPI {
                 })).toList().toObservable();
     }
 
+    //Formatting URL string
     private URL getURL(String method, String identifier, int page, int perPage) throws MalformedURLException {
         return new URL(String.format("%s?method=%s&api_key=%s&%s=%s&%sformat=json&nojsoncallback=1",
                 Config.BASE_URL,

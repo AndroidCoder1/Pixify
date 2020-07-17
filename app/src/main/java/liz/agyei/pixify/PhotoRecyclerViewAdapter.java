@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import liz.agyei.pixify.data.api.FlickrAPI;
 import liz.agyei.pixify.data.models.Photo;
 import liz.agyei.pixify.databinding.PhotoItemBinding;
 import liz.agyei.pixify.utils.ClickListener;
@@ -26,10 +28,12 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
 
     private List<Photo> photos;
     private Context context;
+    private ViewModel model;
 
-    public PhotoRecyclerViewAdapter(List<Photo> photos, Context context) {
+    public PhotoRecyclerViewAdapter(List<Photo> photos, Context context, ViewModel model) {
         this.photos = photos;
         this.context = context;
+        this.model = model;
     }
 
     @Override
@@ -44,6 +48,7 @@ public class PhotoRecyclerViewAdapter extends RecyclerView.Adapter<PhotoRecycler
     public void onBindViewHolder(ViewHolder holder, int position) {
         Photo photo = photos.get(position);
         holder.photoItemBinding.setPhoto(photo);
+        holder.photoItemBinding.setModel((MainActivityViewModel) model);
         setPhotoURL(photo.getUrl(), holder.photoItemBinding.ivPhotoUrl);
         holder.bind(photo);
         holder.photoItemBinding.setClickListener(this);

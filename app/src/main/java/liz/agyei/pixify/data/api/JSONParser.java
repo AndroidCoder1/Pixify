@@ -33,12 +33,12 @@ public class JSONParser {
         return photos;
     }
 
+    //Getting Photos based on Flickr Requirement
     public static String parseJSONPhoto(InputStream responseBody) throws IOException, JSONException {
         String response = Utils.Companion.inputStreamToString(responseBody);
         JSONObject jsonObject = new JSONObject(response);
         if(jsonObject.has("photo")){
             JSONObject photoJSON = jsonObject.getJSONObject("photo");
-
             return Utils.Companion.generatePhotoURL(photoJSON.has("farm") ? photoJSON.getString("farm") : "",
                     photoJSON.has("server") ? photoJSON.getString("server")  : "",
                     photoJSON.has("id") ? photoJSON.getString("id") : "",

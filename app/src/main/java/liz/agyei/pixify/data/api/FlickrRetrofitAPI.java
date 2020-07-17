@@ -11,6 +11,7 @@ import retrofit2.http.Query;
 
 public interface FlickrRetrofitAPI {
 
+    //TODO Alternative api communication using retrofit
     @GET("services/rest/")
     Flowable<List<Photo>> getPhotosByTag(@Query("method") String method,
                                          @Query("api_key") String apiKey,
